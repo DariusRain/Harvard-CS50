@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Index
+{% endblock %}
+
+{% block main %}
+{% with messages = get_flashed_messages() %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Symbol</th>
+                <th>Name</th>
+                <th>Shares</th>
+                <th>Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for stock in portfolio %}
+            <tr>
+                <th>{{stock["symbol"]}}</th>
+                <td>{{stock["stock_name"]}}</td>
+                <td>{{stock["shares"]}}</td>
+                <td>{{stock["price"]}}</td>
+                <td>{{stock["total"]}}</td>
+            </tr>
+
+        {% endfor %}
+            <tr>
+                <th>Cash</th>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>{{userCash}}</td>
+            </tr>
+            <tr>
+                <th>Total</th>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>{{grandTotal}}</td>
+
+            </tr>
+        </tbody>
+    </table>
+    <!--Personal touch-->
+    <form action="/deposit" method="POST">
+        <div class="form-group">
+        <input calss="custom-select border-none" type="number" min="1" name="cash" placeholder="Add cash"/>
+        </div>
+        <button class="btn btn-primary">Add Cash</button>
+     </form>
+{% endwith %}
+{% endblock %}

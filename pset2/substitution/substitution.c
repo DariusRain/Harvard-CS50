@@ -170,3 +170,22 @@ int plaintext_cipher(void)
     return 0;
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

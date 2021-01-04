@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Buy
+{% endblock %}
+
+{% block main %}
+{% with messages = get_flashed_messages() %}
+    <form action="/sell" method="POST">
+        <div class="form-group">
+            <select name="symbol" class="custom-select w-50">
+                    <option selected>Symbol</option>
+                {% for symbol in symbols %}
+                    <option value="{{symbol[0]}}">{{symbol[0]}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <input class="w-20" placeholder="shares" name="shares" type="number" min="1" required />
+        </div>
+            <button class="btn btn-primary" type="submit">Sell</button>
+    </form>
+{% endwith %}
+{% endblock %}
