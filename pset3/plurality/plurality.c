@@ -1,172 +1,144 @@
-// Libraries
-#include <stdio.h>
 #include <cs50.h>
-#include <math.h>
+#include <stdio.h>
 #include <string.h>
-#include <ctype.h>
 
-// Function Protoypes
-const int ALPHA_LENGTH = 26;
-const int ASCII_START = 65;
-const int ASCII_END = 90;
-int table[ALPHA_LENGTH][3];
-int did_pass = 1;
-// Sets the table to used.
-void set_table(void);
+// Max number of candidates
+#define MAX 9
 
-// Evaluates the string from argv[1] and simutaniously adds the keys to the table.
-int evaluate_key(string);
-
-// Asks for plain text and returns the cipher text.
-int plaintext_cipher(void);
-
-//  Set main to take commandline arguments using argc and set a pointer to argv[]
-int main(int argc, char *argv[])
+// Candidates have name and vote count
+typedef struct
 {
-//  Set table to be used.
-    set_table();
+    string name;
+    int votes;
+}
+candidate;
 
-//  If characters are set in argument #2 then true so continue.
-    if (argc == 2)
+// Array of candidates
+candidate candidates[MAX];
+
+// Number of candidates
+int candidate_count;
+
+// Function prototypes
+bool vote(string name);
+void print_winner(void);
+
+int main(int argc, string argv[])
+{
+    // Check for invalid usage
+    if (argc < 2)
     {
-//      Evaulates the string for duplicate chars and special charachters.
-        did_pass = evaluate_key(argv[1]);
-    }
-
-
-
-//  else command was not properly given an argument return 1.
-    else
-    {
-        printf("Usage: ./subsitution key\n");
+        printf("Usage: plurality [candidate ...]\n");
         return 1;
     }
 
+    // Populate array of candidates
+    candidate_count = argc - 1;
+    if (candidate_count > MAX)
+    {
+        printf("Maximum number of candidates is %i\n", MAX);
+        return 2;
+    }
+    for (int i = 0; i < candidate_count; i++)
+    {
+        candidates[i].name = argv[i + 1];
+        candidates[i].votes = 0;
+    }
 
-// TABLE DEBUGGER
-// To see as ASCII integers instead of alphanumerics then change the all %c to %i formatters.
-//  printf("ASCII: [ \n");
-//  for(int i = 0; i < ALPHA_LENGTH; i++)
-//  {
-//     printf("    [ %i, %i, %i],\n", table[i][0], table[i][1], table[i][2]);
-//  }
-//  printf("] \n");
+    int voter_count = get_int("Number of voters: ");
 
-//  printf("Normal Chars: [ \n");
-//  for(int i = 0; i < ALPHA_LENGTH; i++)
-//  {
-//     printf("    [ %c, %c, %i],\n", table[i][0], table[i][1], table[i][2]);
-//  }
-//  printf("] \n");
+    // Loop over all voters
+    for (int i = 0; i < voter_count; i++)
+    {
+        string name = get_string("Vote: ");
 
-//  Done
-    return did_pass;
+        // Check for invalid vote
+        if (!vote(name))
+        {
+            printf("Invalid vote.\n");
+            i -= 1;
+        }
+    }
+
+    // Display winner of election
+    print_winner();
 }
 
-
-
-void set_table(void)
+// Update vote totals given a new vote
+bool vote(string name)
 {
-//  Looping through with ASCII numbers starting from 65 ending with 90.
-    for (int a = ASCII_START * 1, i = 0; a <= ASCII_END; ++a)
+    bool canidate_found = false;
+    //  DR: Looped through all canidates.
+    for (int i = 0; i < candidate_count; i++)
     {
-        if (i <= 26)
+        // DR: If 'strcmp()' returns 0 meaning match is true.
+        if (strcmp(name, candidates[i].name) == 0)
         {
-//          table[0] = { 65, 0, 0 }
-//          table[1] = { 66, 0, 0 }
-            table[i][0] = a;
-            table[i][1] = 0;
-            table[i][2] = 0;
+            // DR: Add one vote if name was found.
+            candidates[i].votes += 1;
 
-//          Go up a index when done.
-            ++i;
+            // DR: Return the expected bool value of true.
+            canidate_found = true;
         }
     }
+    return canidate_found;
 }
 
-int evaluate_key(string key)
+// Print the winner (or winners) of the election
+void print_winner(void)
 {
-    int key_length = strlen(key);
-    if (key_length == 26)
+    // DR: Initilaized a value that dosent change representing the max number of times.
+    const int LOOP_MAX = candidate_count - 1;
+
+    // DR: Set pointers to reference directly to a hexadecimal memory location
+    int votes;
+    string name;
+
+    // DR: Loop through all canidates.
+    for (int i = 0, king_number = 0, stage = 1; i < candidate_count; i++)
     {
+        // DR: Easier variables to work with through out iterations.
+        votes = candidates[i].votes;
+        name = candidates[i].name;
 
-        for (int i = 0; i < 26; i++)
+        // DR: Stage 1: If the loop is hasnt found the king number yet
+        if (stage == 1)
         {
-//          if ASCII number is in range of lowercase ASCII numbers then make it uppercase.
-            if (key[i] >= 97 && key[i] <= 122)
+            // If the number of votes is greater than the current king number
+            if (king_number < votes)
             {
-//              Uppercase char is always -32 away from its lowecase char and vice versa +32.
-                key[i] = key[i] - 32;
+                // DR: Change the king number to the current votes value.
+                king_number = votes;
+// Debug
+//                printf("%s is now king with votes at %i", *name, *votes);
             }
-//          if ASCII number is in range of uppercase ASCII numbers then continue.
-            if (key[i] <= ASCII_END && key[i] >= ASCII_START)
-            {
-// Debug        printf("Table: %i \n", table[i][0]);
-// Debug        printf("Key: %i \n", key[i]);
-// Debug        printf("Char: %c\n", table[key[i] - ASCII_START][0]);
 
-//              if that letter has not been used meaning 0, then make it 1 meaning used.
-                if (table[key[i] - ASCII_START][2] == 0)
-                {
-//                  Set the marker to 1 for future iterations.
-                    table[key[i] - ASCII_START][2] = 1;
-
-//                  Add that .
-                    table[i][1] = key[i];
-                    if (i == 25)
-                    {
-                        return plaintext_cipher();
-                    }
-                }
-//              else that means that the character has been used so stop and return 1.
-                else
-                {
-                    return 1;
-                }
-            }
-//          else that means there is a character that does not belong so stop and return 1.
-            else
+            // If the loop has iterated every possible canidate's number of votes then set loop to
+            // then execute stage 2 @if (done == 0) { ... }
+            if (i == LOOP_MAX)
             {
-                return 1;
+// Debug
+//              printf("Stage 1 ran %i times \n king number is: %i \n", i, king_number);
+                i = -1;
+                stage += 1;
             }
         }
-//      Program is done
-        return 0;
-    }
-//  else that means that the
-    else
-    {
-        printf("Key must contain 26 characters \n");
-        return 1;
-    }
-}
 
+        // Stage 2: If the search for the king number is over or stage is now 2;
+        if (stage == 2 && i != -1)
+        {
+// Debug
+//          printf("Running stage 0 \n comparing votes: %i to %i\n", *votes, king_number);
 
-int plaintext_cipher(void)
-{
-    string plain_text = get_string("plaintext: ");
-    printf("ciphertext: ");
-    for (int i = 0; i < strlen(plain_text); i++)
-    {
-        int x = plain_text[i];
-        if (x >= 97 && x <= 122)
-        {
-            // int temp1 = toupper(plain_text[i]);
-            printf("%c", (table[(x - 32) - ASCII_START][1] + 32));
-        }
-        else if (x >= ASCII_START && x <= ASCII_END)
-        {
-            // int temp2 = toupper(plain_text[i]);
-            printf("%c", table[x - ASCII_START][1]);
-        }
-        else
-        {
-            printf("%c", plain_text[i]);
+            // Now that the loop has been reset
+            // If the canidates number of votes equal the king number then printf their name & \n
+            if (votes == king_number)
+            {
+                // Print out the string data type of winner !
+                printf("%s\n", name);
+            }
         }
     }
-
-    printf("\n");
-    did_pass = 0;
-    return 0;
-
+    // TODO
+    return;
 }

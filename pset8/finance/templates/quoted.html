@@ -1,0 +1,30 @@
+{% extends "quote.html" %}
+
+{% block title %}
+    Quote
+{% endblock %}
+
+{% block main %}
+{% with messages = get_flashed_messages() %}
+    <form>
+        <div class="form-group">
+            <input placeholder="Search" name="symbol"  type="text" required />
+
+        </div>
+    </form>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Symbol</th>
+                <th>Name</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <th scope="row">{{stocks["symbol"]}}</th>
+            <td>{{stocks.name}}</td>
+            <td>{{stocks.price}}</td>
+        </tbody>
+    </table>
+{% endwith %}
+{% endblock %}

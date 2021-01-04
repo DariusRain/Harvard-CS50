@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+        <link href="styles.css" rel="stylesheet">
+        <link rel="icon" href="data:,">
+        <title>Home</title>
+        <script src="index.js" defer></script>
+        <!--If the user has no javascript I found that common practice is to include a noscript
+        to contain tags to notify the user that javascript must be enabled, otherwise the page would
+        appear to be disfunctional. (Bootstrap classes included)-->
+        <noscript>
+            <div class="alert alert-warning text-center">
+                <span>
+                    <strong>Javascript must be enabled</strong> to view content, sorry...
+                </span>
+            </div>
+        </noscript>
+    </head>
+    <body class="m-0">
+        <!--Header tag is for containing elements that are on top of page in this case the navbar-->
+        <header class="b-color-primary w-100 p-1">
+
+        <!--Each anchor tag contains a link by fruit name   -->
+        <nav class="nav d-flex flex-wrap">
+            <li>
+                <a class="p-3 px-3 font-weight-bold text-decoration-none color-secondary" href="#">Jack's Fruit</a>
+            </li>
+            <li>
+                <a class="p-3" href="/apples">Apples</a>
+            </li>
+            <li>
+                <a class="p-3" href="/oranges">Oranges</a>
+            </li>
+            <li>
+                <a class="p-3" href="/pears">Pears</a>
+            </li>
+            <li>
+                <a class="p-3" href="/jack-fruit">Jack Fruit</a>
+            </li>
+        </nav>
+        </header>
+
+        <!--This div element contains a jumbotron for displaying contnent that you want the user to see-->
+        <!--imediately when navigating to a page-->
+        <div class="jumbotron text-center">
+            <p>
+                Welcome to Jack's Fruit, check out the collection of delicious fruits below! 😁
+            </p>
+        </div>
+
+        <!--This is the parent all Javascript created html elements-->
+        <div id="main"></div>
+
+
+
+        <!--Adding a footer tag is common practice-->
+        <footer class="footer bg-secondary">
+            &copy; Jack's Fruit 2020
+            <br/>
+             <b>Not a real website</b>
+        </footer>
+
+    </body>
+</html>

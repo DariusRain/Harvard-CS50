@@ -1,0 +1,15 @@
+Cs50 Crypto
+Pseudo Club 
+
+This invite-only club event is going on today !
+
+But a new 26 person policy is enforced in this club and to handle the imposters who try to fake 
+their way in
+Put up a sign that has the rules to get in and have other bouncers enforce that policy.
+
+    Rules:
+        1. If the line grows past 26 do not let them in the club, no exceptions. 
+        2. Scan each person and see if this personm
+        
+           
+Bouncer is waiting until the enter bar event is ready everything is set...

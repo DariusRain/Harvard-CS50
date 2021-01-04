@@ -1,0 +1,61 @@
+
+/*Primary color for theme*/
+.color-primary {
+    color: #e0ffe9 !important;
+}
+
+/*Secondary color for theme*/
+.color-seconday {
+    color: #4578d1 !important;
+}
+
+.b-color-primary {
+    background-color: #e0ffe9;
+}
+
+
+
+.b-color-secondary {
+    background-color: #999999 !important;
+}
+
+
+/*Main is a container element  utilizes flex box*/
+#main {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content:space-around;
+    margin: 0 auto;
+    width: 70vw;
+}
+
+/*Flex items*/
+#main div {
+    margin: 1rem;
+    padding: 0.2rem;
+    box-shadow: 0.1rem 0.1rem 0.3rem;
+    width: 15vw;
+}
+
+/*Flex item images*/
+#main div img {
+    height:100%;
+}
+
+/*Enable the attributes during the mouse hovers over div*/
+#main div:hover {
+    box-shadow: none;
+    cursor: pointer;
+}
+
+/*Placing the footer at the bottom*/
+.footer {
+    position: relative;
+    left:0;
+    bottom: 0;
+    width: 100%;
+    text-align:center;
+    padding: 2rem;
+
+}

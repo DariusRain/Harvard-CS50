@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!--Displays only apples-->
+<html lang="en">
+    <head>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+        <link href="styles.css" rel="stylesheet">
+        <script src="index.js" defer></script>
+        <title>Apples</title>
+    </head>
+    <body class="m-0">
+        <header class="b-color-primary w-100 p-1">
+        <nav class="nav d-flex align-content-stretch">
+            <li>
+                <a class="p-3 px-3 font-weight-bold text-decoration-none color-secondary" href="/index">Jack's Fruit</a>
+            </li>
+            <li>
+                <a class="p-5" href="/oranges">Oranges</a>
+            </li>
+            <li>
+                <a class="p-5" href="/pears">Pears</a>
+            </li>
+            <li>
+                <a class="p-5" href="/jack-fruit">Jack Fruit</a>
+            </li>
+        </nav>
+        </header>
+        <div id="main"></div>
+    
+    
+        <!--If the user has no javascript I found that common practice is to include a noscript
+        to contain tags to notify the user that javascript must be enabled, otherwise the page would
+        appear to be disfunctional. (Bootstrap classes included)-->
+        <noscript>
+            <div class="alert alert-warning text-center">
+                <span>
+                    <strong>Javascript must be enabled</strong> to view content, sorry...
+                </span>
+            </div>
+        </noscript>
+
+    </body>
+    
+</html>
